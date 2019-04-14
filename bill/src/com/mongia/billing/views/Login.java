@@ -17,10 +17,12 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.log4j.Logger;
+
 import com.mongia.billing.dao.UserDAO;
 
 public class Login extends JFrame {
-
+	static Logger logger = Logger.getLogger(Login.class);
 	private JPanel contentPane;
 	private JTextField textField;
 	private JPasswordField passwordField;
@@ -29,8 +31,10 @@ public class Login extends JFrame {
 	 * Launch the application.
 	 */
 	private void checkLogin() {
+		logger.debug("Inside CheckLogin ");
 		String userid = textField.getText();
 		String password = passwordField.getText();
+		logger.debug("Rec Userid Value "+userid+" Password "+password);
 		UserDAO common = new UserDAO();
 		try {
 		boolean isUserexist = common.doLogin(userid, password);
@@ -46,24 +50,15 @@ public class Login extends JFrame {
 		}
 		catch(SQLException e) {
 			JOptionPane.showMessageDialog(this, "Some DataBase Issue Occur Contact to System Admin");
+			logger.error(e);
 		}
 		catch(ClassNotFoundException e) {
 			JOptionPane.showMessageDialog(this, "DB Driver Missing, Contact to System Admin");
+			logger.error(e);
 		}
 	}
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login frame = new Login();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the frame.

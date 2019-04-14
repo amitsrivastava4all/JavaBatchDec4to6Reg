@@ -8,9 +8,10 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-public interface CommonDAO {
-	public static Connection getConnection() throws SQLException, ClassNotFoundException {
-ResourceBundle rb = ResourceBundle.getBundle("db");
+public class CommonDAO {
+	public  Connection getConnection() throws SQLException, ClassNotFoundException {
+		System.out.println("PostGres DAO Call");
+		ResourceBundle rb = ResourceBundle.getBundle("db");
 		
 		Connection con = null;
 		Class.forName(rb.getString("driver"));

@@ -21,6 +21,7 @@ import com.mongia.billing.dao.ProductDAO;
 import com.mongia.billing.dto.ProductDTO;
 import com.mongia.billing.utils.BundleReader;
 import com.mongia.billing.utils.CommonConstants;
+import com.mongia.billing.utils.Email;
 import com.mongia.billing.utils.ExcelReader;
 
 public class DashBoard extends JFrame implements CommonConstants {
@@ -37,7 +38,13 @@ public class DashBoard extends JFrame implements CommonConstants {
 				ArrayList<ProductDTO> products = ExcelReader.readExcel(currentFile);
 				ProductDAO productDAO  = new ProductDAO();
 				String message = productDAO.bulkAdd(products)?"Bulk Uploaded SuccessFully ":"Not Uploaded Some Error";
+				if(message.contains("SuccessFully")) {
+					Email.sendMail();
+					JOptionPane.showMessageDialog(this, message);
+				}
+				else {
 				JOptionPane.showMessageDialog(this, message);
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -12,7 +12,7 @@ public class ProductDAO {
 		Connection con = null;
 		boolean isSuccess = false;
 		PreparedStatement pstmt = null;
-		con = CommonDAO.getConnection();
+		con = new CommonDAO().getConnection();
 		con.setAutoCommit(false);
 		
 		pstmt = con.prepareStatement("insert into product(id ,name, price, quantity) values(?,?,?,?)");
@@ -37,7 +37,7 @@ public class ProductDAO {
 	public boolean isAdded (ProductDTO productDTO) throws ClassNotFoundException, SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		con = CommonDAO.getConnection();
+		con = new CommonDAO().getConnection();
 		pstmt = con.prepareStatement("insert into product(id,name,price) values(?,?,?)");
 		pstmt.setInt(1, productDTO.getId());
 		pstmt.setString(2, productDTO.getName());
@@ -51,7 +51,7 @@ public class ProductDAO {
 	public boolean delete (int id) throws ClassNotFoundException, SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		con = CommonDAO.getConnection();
+		con = new CommonDAO().getConnection();
 		pstmt = con.prepareStatement("delete from product where id=?");
 		pstmt.setInt(1, id);
 		
